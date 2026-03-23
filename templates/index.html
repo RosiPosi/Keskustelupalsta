@@ -12,7 +12,15 @@
   <p>
     You're logged in as the user {{ session.username }}
   </p>
-  {% else %}
+  {% endif %}
+
+  <p>
+    <a href="/login">Log in</a>
+  </p>
+    <a href="/register">Create an account</a>
+  </p>
+    <a href="/logout">Log out</a>
+  </p>
 </body>
 
 </html>
