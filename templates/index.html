@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Discussions</title>
+</head>
+
+<body>
+  <h1>Discussions</h1>
+
+  {% if session.username %}
+  <p>
+    You're logged in as {{ session.username }} 
+  </p>
+    You are the #{{ session.user_id }} user created!
+  </p>
+  {% endif %}
+
+  <p>
+    <a href="/login">Log in</a>
+  </p>
+    <a href="/register">Create an account</a>
+  </p>
+    <a href="/logout">Log out</a>
+  </p>
+    <a href="/new_item">New topic</a>
+  </p>
+</body>
+
+</html>
