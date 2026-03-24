@@ -10,7 +10,7 @@
 
   {% if session.username %}
   <p>
-    You're logged in as the user {{ session.username }}
+    You're logged in as {{ session.username }}
   </p>
   {% endif %}
 
@@ -20,6 +20,8 @@
     <a href="/register">Create an account</a>
   </p>
     <a href="/logout">Log out</a>
+  </p>
+    <a href="/new_item">New topic</a>
   </p>
 </body>
 

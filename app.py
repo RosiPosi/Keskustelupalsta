@@ -12,6 +12,10 @@ app.secret_key = config.secret_key
 def index():
     return render_template("index.html")
 
+@app.route("/new_item")
+def new_item():
+    return render_template("new_item.html")
+
 @app.route("/register")
 def register():
     return render_template("register.html")
