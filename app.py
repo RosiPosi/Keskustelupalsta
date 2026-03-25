@@ -59,7 +59,7 @@ def login():
         password = request.form["password"]
         
         sql = "SELECT id, password_hash FROM users WHERE username = ?"
-        result = db.query(sql, [username])[0]
+        result = db.query(sql, [username])
         user_id = result["id"]
         password_hash = result["password_hash"]
 
@@ -73,5 +73,6 @@ def login():
 @app.route("/logout")
 def logout():
     session.pop("user_id", None)
-    del session["username"]
+    session.pop("username", None)
+
     return redirect("/")
