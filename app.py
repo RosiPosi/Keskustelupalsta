@@ -16,7 +16,7 @@ def index():
 
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
-    item = items.get_items(item_id)
+    item = items.get_item(item_id)
     return render_template("show_item.html", item=item)
 
 @app.route("/new_item")
