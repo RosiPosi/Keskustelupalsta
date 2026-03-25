@@ -25,6 +25,14 @@
   </p>
     <a href="/new_item">New topic</a>
   </p>
+
+  <h2>Current topics</h2>
+
+  <ul>
+  {% for item in items %}
+  <li><a href="/item/{{ item.title }}">{{ item.title }}</a></li>
+  {% endfor %}
+  </ul>
 </body>
 
 </html>

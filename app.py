@@ -4,13 +4,20 @@ from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash
 import config
 import db
+import items
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    all_items = items.get_items()
+    return render_template("index.html", items=all_items)
+
+@app.route("/item/<int:item_id>")
+def show_item(item_id):
+    item = items.get_items(item_id)
+    return render_template("show_item.html", item=item)
 
 @app.route("/new_item")
 def new_item():
@@ -22,8 +29,7 @@ def create_item():
     description = request.form["description"]
     user_id = session["user_id"]
 
-    sql = "INSERT INTO items (title, description, user_id) VALUES (?, ?, ?)"
-    db.execute(sql, [title, description, user_id])
+    items.add_item(title, description, user_id)
 
     return redirect("/")
 
@@ -60,8 +66,8 @@ def login():
         
         sql = "SELECT id, password_hash FROM users WHERE username = ?"
         result = db.query(sql, [username])
-        user_id = result["id"]
-        password_hash = result["password_hash"]
+        user_id = result[0]["id"]
+        password_hash = result[0]["password_hash"]
 
         if check_password_hash(password_hash, password):
             session["user_id"] = user_id
@@ -72,7 +78,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    session.pop("user_id", None)
-    session.pop("username", None)
-
+    if "user_id" in session:
+        del session["user_id"]
+        del session["username"]
     return redirect("/")
