@@ -12,6 +12,19 @@ app.secret_key = config.secret_key
 def index():
     return render_template("index.html")
 
+<<<<<<< Updated upstream
+=======
+@app.route("/new_item")
+def new_item():
+    return render_template("new_item.html")
+
+@app.route("/create_item")
+def create_item():
+    title = request.form["title"]
+    description = request.form["description"]
+    user_id = session["user_id"]
+
+>>>>>>> Stashed changes
 @app.route("/register")
 def register():
     return render_template("register.html")
