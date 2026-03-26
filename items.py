@@ -18,3 +18,11 @@ def get_item(item_id):
             WHERE items.user_id = users.id 
             AND items.id = ?"""
     return db.query(sql, [item_id])[0]
+
+def update_item(item_id, title, description):
+    sql = """UPDATE items SET 
+                    title = ?,
+                    description = ?
+                    WHERE id = ?
+            """
+    db.execute(sql, [title, description, item_id])

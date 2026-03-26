@@ -19,6 +19,8 @@ def show_item(item_id):
     item = items.get_item(item_id)
     return render_template("show_item.html", item=item)
 
+# POSTING / EDITING
+
 @app.route("/new_item")
 def new_item():
     return render_template("new_item.html")
@@ -35,7 +37,20 @@ def create_item():
 
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
-    return render_template("edit_item.html")
+    item = items.get_item(item_id)
+    return render_template("edit_item.html", item=item)
+
+@app.route("/update_item", methods=["POST"])
+def update_item():
+    item_id = request.form["item_id"]
+    title = request.form["title"]
+    description = request.form["description"]
+
+    items.update_item(item_id, title, description)
+
+    return redirect("/item/" + str(item_id))
+
+# REGISTRATION AND LOGGING IN / USER RELATED CODE
 
 @app.route("/register")
 def register():
