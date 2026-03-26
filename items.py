@@ -9,8 +9,10 @@ def get_items():
     return db.query(sql)
 
 def get_item(item_id):
-    sql = """SELECT items.title, 
-                    items.description, 
+    sql = """SELECT items.id,
+                    items.title, 
+                    items.description,
+                    users.id user_id, 
                     users.username
             FROM items, users
             WHERE items.user_id = users.id 
