@@ -33,6 +33,10 @@ def create_item():
 
     return redirect("/")
 
+@app.route("/edit_item/<int:item_id>")
+def edit_item(item_id):
+    return render_template("edit_item.html")
+
 @app.route("/register")
 def register():
     return render_template("register.html")
