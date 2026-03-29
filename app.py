@@ -16,8 +16,10 @@ def index():
 
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
-    item = items.get_items(item_id)
+    item = items.get_item(item_id)
     return render_template("show_item.html", item=item)
+
+# POSTING / EDITING
 
 @app.route("/new_item")
 def new_item():
@@ -32,6 +34,36 @@ def create_item():
     items.add_item(title, description, user_id)
 
     return redirect("/")
+
+@app.route("/edit_item/<int:item_id>")
+def edit_item(item_id):
+    item = items.get_item(item_id)
+    return render_template("edit_item.html", item=item)
+
+@app.route("/update_item", methods=["POST"])
+def update_item():
+    item_id = request.form["item_id"]
+    title = request.form["title"]
+    description = request.form["description"]
+
+    items.update_item(item_id, title, description)
+
+    return redirect("/item/" + str(item_id))
+
+@app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
+def remove_item(item_id):
+    if request.method == "GET":
+        item = items.get_item(item_id)
+        return render_template("remove_item.html", item=item)
+    
+    if request.method == "POST":
+        if "remove" in request.form:
+            items.remove_item(item_id)
+            return redirect("/")
+        else:
+            return redirect("/item/" + str(item_id))
+
+# REGISTRATION AND LOGGING IN / USER RELATED CODE
 
 @app.route("/register")
 def register():

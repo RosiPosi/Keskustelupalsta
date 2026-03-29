@@ -3,11 +3,31 @@
 
 <head>
   <title>Discussions</title>
+  <style>
+  .left, .right {
+    float: left;
+    width: 20%; /* The width is 20%, by default */
+  }
+
+  .main {
+    float: left;
+    width: 60%; /* The width is 60%, by default */
+  }
+
+  /* Use a media query to add a breakpoint at 800px: */
+  @media screen and (max-width: 800px) {
+    .left, .main, .right {
+      width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+    }
+  }
+  </style>
 </head>
 
-<body>
-  <h1>Discussions</h1>
-
+<body style="background-color: rgb(249, 252, 255);">
+  
+  <h2>Account</h2>
+  
+  <div class="left">
   {% if session.username %}
   <p>
     You're logged in as {{ session.username }} 
@@ -16,23 +36,33 @@
   </p>
   {% endif %}
 
+  {% if not session.username %}
   <p>
-    <a href="/login">Log in</a>
-  </p>
+    <a href="/login"><button>Log in</button></a>
+  <p>
     <a href="/register">Create an account</a>
+  {% endif %}
   </p>
-    <a href="/logout">Log out</a>
+    <a href="/logout"><button>Log out</button></a>
+  
   </p>
-    <a href="/new_item">New topic</a>
-  </p>
+  </div>
 
+  <div class="main">
+  <h1>Discussions</h1>
+  <p>
+    Start a <a href="/new_item"><button style="background-color: rgb(128, 206, 135);">new topic</button></a>
+  </p>
   <h2>Current topics</h2>
 
   <ul>
   {% for item in items %}
-  <li><a href="/item/{{ item.title }}">{{ item.title }}</a></li>
+  <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
   {% endfor %}
   </ul>
+
+  </div>
+
 </body>
 
 </html>

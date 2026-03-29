@@ -5,11 +5,38 @@
   <title>{{ item.title }}</title>
 </head>
 
-<body>
+<style>
+  .border {
+      border-width: 3px;
+      
+      border-style: solid;
+      border-color:rgb(128, 206, 135);
+      padding: 10px;
+      display: inline-block;
+  }
+</style>
+
+<body style="background-color: rgb(249, 252, 255);">
   <h1>{{ item.title }}</h1>
-    <p>
-      {{ item.description }}
-    </p>
+
+  <div class="border" style="white-space: pre-wrap;">{{ item.description }}</div>
+
+
+  <p>
+    Started by: {{ item.username }}
+  </p>
+
+  {% if session.user_id == item.user_id %}
+  <p>
+    <a href="/edit_item/{{ item.id }}">Edit</a>
+    <a href="/remove_item/{{ item.id }}">Delete</a>  
+  </p>
+  {% endif %}
+
+  <p>
+    <a href="/">Back</a>
+  </p>
+  
 </body>
 
 </html>
