@@ -9,18 +9,15 @@
 - Käyttäjä pystyy valitsemaan aiheelle yhden tai useamman kategorian. Mahdolliset kategoriat ovat esim. Sarjat ja elokuvat, Pelit, Anime ja Manga, Ruoka, Eläimet, Suhteet jne.
 - Sovelluksessa on pääasiallisen aiheen noston lisäksi aiheeseen kommentointi, joka jatkaa keskustelua. 
 
-# asennus
+# Asennus
 Asenna flask-kirjasto:
-
-Linux: $ pip install flask
-Windows: pip install Flask
+- Linux: $ pip install flask
+- Windows: pip install Flask
 
 Luo tietokannan taulut ja lisää alkutiedot:
-
-Linux: $ sqlite3 database.db < schema.sql
-Windows: sqlite3.exe database.db ".read schema.sql"
+- Linux: $ sqlite3 database.db < schema.sql
+- Windows: sqlite3.exe database.db ".read schema.sql"
 
 Käynnistys:
-
-Linux: $ flask run 
-Windows: flask run
+- Linux: $ flask run 
+- Windows: flask run
