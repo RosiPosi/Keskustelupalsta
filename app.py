@@ -84,7 +84,7 @@ def create():
     except sqlite3.IntegrityError:
         return "ERROR: username is taken."
 
-    return "Account created"
+    return "Account created! Return to the main page to log in."
 
 
 @app.route("/login", methods=["GET", "POST"])

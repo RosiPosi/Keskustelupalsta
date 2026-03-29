@@ -5,7 +5,7 @@
   <title>Logging in</title>
 </head>
 
-<body>
+<body style="background-color: rgb(249, 252, 255);">
   {% if session.username %}
   <p>
     You're logged in as {{ session.username }}
@@ -14,7 +14,7 @@
     <a href="/logout">Log out</a>
   </p>
   {% else %}
-  <form action="/login" method="post">
+  <form action="/login" method="post" style="background-color: rgb(249, 252, 255);">
     <p>
       Username: <br />
       <input type="text" name="username" />
