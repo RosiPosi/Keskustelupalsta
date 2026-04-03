@@ -62,6 +62,17 @@ def remove_item(item_id):
             return redirect("/")
         else:
             return redirect("/item/" + str(item_id))
+        
+# SEARCHING
+@app.route("/search")
+def search():
+    query = request.args.get("query")
+    if query:
+        results = items.search_results(query)
+    else:
+        query = ""
+        results = []
+    return render_template("search_results.html", query=query, results=results)
 
 # REGISTRATION AND LOGGING IN / USER RELATED CODE
 
@@ -84,7 +95,7 @@ def create():
     except sqlite3.IntegrityError:
         return "ERROR: username is taken."
 
-    return "Account created"
+    return "Account created! Return to the main page to log in."
 
 
 @app.route("/login", methods=["GET", "POST"])

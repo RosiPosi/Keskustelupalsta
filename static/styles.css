@@ -1,0 +1,33 @@
+.left, .right {
+  float: left;
+  width: 20%;
+}
+
+.main {
+  float: left;
+  width: 60%;
+}
+
+
+
+@media screen and (max-width: 800px) {
+  .left, .main, .right {
+    width: 100%;
+  }
+}
+
+body {
+  background-color: rgb(249, 252, 255);
+}
+
+
+.search-container {
+    width: 60%;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.search-container ul {
+    text-align: left;
+    display: inline-block;
+}

@@ -3,66 +3,65 @@
 
 <head>
   <title>Discussions</title>
-  <style>
-  .left, .right {
-    float: left;
-    width: 20%; /* The width is 20%, by default */
-  }
-
-  .main {
-    float: left;
-    width: 60%; /* The width is 60%, by default */
-  }
-
-  /* Use a media query to add a breakpoint at 800px: */
-  @media screen and (max-width: 800px) {
-    .left, .main, .right {
-      width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
-    }
-  }
-  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
-<body style="background-color: rgb(249, 252, 255);">
-  
-  <h2>Account</h2>
-  
-  <div class="left">
-  {% if session.username %}
-  <p>
-    You're logged in as {{ session.username }} 
-  </p>
-    You are the #{{ session.user_id }} user created!
-  </p>
-  {% endif %}
+<body>
 
-  {% if not session.username %}
-  <p>
-    <a href="/login"><button>Log in</button></a>
-  <p>
-    <a href="/register">Create an account</a>
-  {% endif %}
-  </p>
-    <a href="/logout"><button>Log out</button></a>
-  
-  </p>
+  <div class="left">
+    <h2>Account</h2>
+    {% if session.username %}
+      <p>You're logged in as {{ session.username }}</p>
+      <p>You are the #{{ session.user_id }} user created!</p>
+    {% endif %}
+
+    {% if not session.username %}
+      <p><a href="/login"><button>Log in</button></a></p>
+      <p><a href="/register">Create an account</a></p>
+    {% endif %}
+
+    {% if session.username %}
+      <p><a href="/logout"><button>Log out</button></a></p>
+    {% endif %}
   </div>
 
   <div class="main">
-  <h1>Discussions</h1>
-  <p>
-    Start a <a href="/new_item"><button style="background-color: rgb(128, 206, 135);">new topic</button></a>
-  </p>
-  <h2>Current topics</h2>
+    <!--SEARCH BAR-->
+    <form action="/search" method="GET">
+      <p>Search: <input type="text" name="query" placeholder="I'd like to discuss..." value="{{ query }}"> 
+      <input type="submit" value="Search"> </p>
+    </form>
+    
 
-  <ul>
-  {% for item in items %}
-  <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
-  {% endfor %}
-  </ul>
+    <!--DISCUSSIONS COLUMN-->
+    <h1>Discussions</h1>
+    <p>
+      Start a <a href="/new_item"><button style="background-color: rgb(128, 206, 135);">new topic</button></a>
+    </p>
 
+    <h2>Current topics</h2>
+    <ul>
+      {% for item in items %}
+        <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="right">
+    <h2>Progress</h2>
+    <ul>
+      <li>Account creation and logging in/out</li>
+      <li>Creating posts</li>
+      <li>Editing and deleting posts</li>
+      <li>Searching up posts by keywords</li>
+    </ul>
+
+    <h2>To do</h2>
+    <ul>
+      <li>Commenting on posts</li>
+      <li>Searching up posts by category</li>
+    </ul>
   </div>
 
 </body>
-
 </html>
