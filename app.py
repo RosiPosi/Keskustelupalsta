@@ -109,6 +109,10 @@ def login():
         
         sql = "SELECT id, password_hash FROM users WHERE username = ?"
         result = db.query(sql, [username])
+
+        if not result:
+            return "ERROR: wrong username or password."
+        
         user_id = result[0]["id"]
         password_hash = result[0]["password_hash"]
 
