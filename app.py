@@ -62,6 +62,14 @@ def remove_item(item_id):
             return redirect("/")
         else:
             return redirect("/item/" + str(item_id))
+        
+# SEARCHING
+@app.route("/search")
+def search():
+    query = request.args.get("query")
+    if not query:
+        query = ""
+    return render_template("search_results.html", query=query)
 
 # REGISTRATION AND LOGGING IN / USER RELATED CODE
 
