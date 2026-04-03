@@ -8,24 +8,37 @@
 
 <body>
 
-  <div class="main">
+  <div class="search-container">
+
     <!--SEARCH BAR-->
     <form action="/search" method="GET">
-      <p>Search: <input type="text" name="query" placeholder="{{ query }}"> 
+      <p>Search: <input type="text" name="query" value="{{ query }}"> 
       <input type="submit" value="Search"> </p>
     </form>
     
 
     <!--DISCUSSIONS COLUMN-->
-    {% if query %}
-    <h2>Disscussions about {{ query }}:</h2>
+
+  
+
+    {% if results %}
+        <h2>Disscussions about {{ query }}:</h2>
+        <ul>
+        {% for item in results %}
+            <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
+        {% endfor %}
+        </ul>
+
+    {% else %}
+        <h2>No disscussions about {{ query }} :(</h2>
+        <a href="/new_item">
+            <button style="background-color: rgb(128, 206, 135);">Create one!</button>
+        </a>
     {% endif %}
 
-    <ul>
-      {% for item in results %}
-        <li><a href="/item/{{ item[0] }}">{{ item[1] }}</a></li>
-      {% endfor %}
-    </ul>
+    <p>
+    <a href="/">Back home</a>
+    </p>
   </div>
     
 

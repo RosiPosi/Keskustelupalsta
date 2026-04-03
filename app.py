@@ -67,9 +67,12 @@ def remove_item(item_id):
 @app.route("/search")
 def search():
     query = request.args.get("query")
-    if not query:
+    if query:
+        results = items.search_results(query)
+    else:
         query = ""
-    return render_template("search_results.html", query=query)
+        results = []
+    return render_template("search_results.html", query=query, results=results)
 
 # REGISTRATION AND LOGGING IN / USER RELATED CODE
 
