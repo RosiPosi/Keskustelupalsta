@@ -3,36 +3,17 @@
 
 <head>
   <title>Discussions</title>
-  <style>
-  .left, .right {
-    float: left;
-    width: 20%; /* The width is 20%, by default */
-  }
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 
-  .main {
-    float: left;
-    width: 60%; /* The width is 60%, by default */
-  }
-
-  /* Use a media query to add a breakpoint at 800px: */
-  @media screen and (max-width: 800px) {
-    .left, .main, .right {
-      width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
-    }
-  }
-  </style>
 </head>
 
-<body style="background-color: rgb(249, 252, 255);">
+<body>
 
   <div class="left">
   <h2>Account</h2>
   {% if session.username %}
-  <p>
-    You're logged in as {{ session.username }} 
-  </p>
-    You are the #{{ session.user_id }} user created!
-  </p>
+  <p>You're logged in as {{ session.username }} </p>
+  <p>You are the #{{ session.user_id }} user created!</p>
   {% endif %}
 
   {% if not session.username %}
