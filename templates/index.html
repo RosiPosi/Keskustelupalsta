@@ -35,9 +35,15 @@
 
     <!--DISCUSSIONS COLUMN-->
     <h1>Discussions</h1>
+    {% if session.username %}
     <p>
       Start a <a href="/new_item"><button style="background-color: rgb(128, 206, 135);">new topic</button></a>
     </p>
+    {% endif %}
+
+    {% if not session.username %}
+      <p><a href="/login">Log in</a> to start your own discussion!</p>
+    {% endif %}
 
     <h2>Current topics</h2>
     <ul>

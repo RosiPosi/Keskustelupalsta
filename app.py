@@ -9,6 +9,10 @@ import items
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
+def check_login():
+    if "user_id" not in session:
+        abort(403)
+
 @app.route("/")
 def index():
     all_items = items.get_items()
@@ -25,10 +29,13 @@ def show_item(item_id):
 
 @app.route("/new_item")
 def new_item():
+    check_login()
     return render_template("new_item.html")
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
+    check_login()
+
     title = request.form["title"]
     description = request.form["description"]
     user_id = session["user_id"]
