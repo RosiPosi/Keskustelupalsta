@@ -40,6 +40,11 @@ def create_item():
     description = request.form["description"]
     user_id = session["user_id"]
 
+    if len(title) > 50:
+        abort(403)
+    if len(description) > 1000:
+        abort(403)
+
     items.add_item(title, description, user_id)
 
     return redirect("/")
