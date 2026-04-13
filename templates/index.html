@@ -47,8 +47,11 @@
 
     <h2>Current topics</h2>
     <ul>
+      
       {% for item in items %}
         <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
+      {% else %}
+        <li>No topics posted.</li>
       {% endfor %}
     </ul>
   </div>

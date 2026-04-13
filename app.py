@@ -5,6 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import config
 import db
 import items
+import users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -24,6 +25,14 @@ def show_item(item_id):
     if not item:
         abort(404)
     return render_template("show_item.html", item=item)
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    items = users.get_item(user_id)
+    return render_template("show_user.html", user=user, items=items)
 
 # POSTING / EDITING
 

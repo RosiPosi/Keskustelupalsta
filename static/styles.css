@@ -31,3 +31,12 @@ body {
     text-align: left;
     display: inline-block;
 }
+
+.border {
+    border-width: 3px;
+      
+    border-style: solid;
+    border-color:rgb(128, 206, 135);
+    padding: 10px;
+    display: inline-block;
+}
