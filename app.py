@@ -40,7 +40,7 @@ def create_item():
     description = request.form["description"]
     user_id = session["user_id"]
 
-    if len(title) > 50:
+    if not title or len(title) > 50:
         abort(403)
     if len(description) > 1000:
         abort(403)
@@ -70,6 +70,9 @@ def update_item():
         
     title = request.form["title"]
     description = request.form["description"]
+
+    if not title or len(title) > 50:
+        abort(403)
 
     items.update_item(item_id, title, description)
 
