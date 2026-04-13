@@ -131,6 +131,8 @@ def create():
     
     try:
         users.create_user(username, password1)
+    except sqlite3.IntegrityError:
+        return "ERROR: username already taken."
 
     return "Account created! Return to the main page to log in."
 
