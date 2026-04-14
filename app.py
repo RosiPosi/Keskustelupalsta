@@ -1,13 +1,17 @@
 from flask import Flask
 import sqlite3
 from flask import abort, redirect, render_template, request, session
-from werkzeug.security import check_password_hash, generate_password_hash
 import config
 import db
 import items
+import users
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+def check_login():
+    if "user_id" not in session:
+        abort(403)
 
 @app.route("/")
 def index():
@@ -17,19 +21,37 @@ def index():
 @app.route("/item/<int:item_id>")
 def show_item(item_id):
     item = items.get_item(item_id)
+    if not item:
+        abort(404)
     return render_template("show_item.html", item=item)
+
+@app.route("/user/<int:user_id>")
+def show_user(user_id):
+    user = users.get_user(user_id)
+    if not user:
+        abort(404)
+    items = users.get_item(user_id)
+    return render_template("show_user.html", user=user, items=items)
 
 # POSTING / EDITING
 
 @app.route("/new_item")
 def new_item():
+    check_login()
     return render_template("new_item.html")
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
+    check_login()
+
     title = request.form["title"]
     description = request.form["description"]
     user_id = session["user_id"]
+
+    if not title or len(title) > 50:
+        abort(403)
+    if len(description) > 1000:
+        abort(403)
 
     items.add_item(title, description, user_id)
 
@@ -38,6 +60,8 @@ def create_item():
 @app.route("/edit_item/<int:item_id>")
 def edit_item(item_id):
     item = items.get_item(item_id)
+    if not item:
+        abort(404)
     if item[ "user_id"] != session["user_id"]:
         abort(403)
     return render_template("edit_item.html", item=item)
@@ -47,11 +71,16 @@ def update_item():
     item_id = request.form["item_id"]
 
     item = items.get_item(item_id)
+    if not item:
+        abort(404)
     if item[ "user_id"] != session["user_id"]:
         abort(403)
         
     title = request.form["title"]
     description = request.form["description"]
+
+    if not title or len(title) > 50:
+        abort(403)
 
     items.update_item(item_id, title, description)
 
@@ -60,6 +89,8 @@ def update_item():
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
     item = items.get_item(item_id)
+    if not item:
+        abort(404)
     if item[ "user_id"] != session["user_id"]:
         abort(403)
 
@@ -97,13 +128,11 @@ def create():
     password2 = request.form["password2"]
     if password1 != password2:
         return "ERROR: passwords don't match."
-    password_hash = generate_password_hash(password1)
-
+    
     try:
-        sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
-        db.execute(sql, [username, password_hash])
+        users.create_user(username, password1)
     except sqlite3.IntegrityError:
-        return "ERROR: username is taken."
+        return "ERROR: username already taken."
 
     return "Account created! Return to the main page to log in."
 
@@ -116,22 +145,14 @@ def login():
     if request.method == "POST":      
         username = request.form["username"]
         password = request.form["password"]
-        
-        sql = "SELECT id, password_hash FROM users WHERE username = ?"
-        result = db.query(sql, [username])
 
-        if not result:
-            return "ERROR: wrong username or password."
-        
-        user_id = result[0]["id"]
-        password_hash = result[0]["password_hash"]
-
-        if check_password_hash(password_hash, password):
-            session["user_id"] = user_id
-            session["username"] = username
-            return redirect("/")
-        else:
-            return "ERROR: wrong username or password."
+    user_id = users.check_login(username, password)
+    if user_id:
+        session["user_id"] = user_id
+        session["username"] = username
+        return redirect("/")
+    else:
+        return "ERROR: wrong username or password."
 
 @app.route("/logout")
 def logout():
