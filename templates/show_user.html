@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{ user.username }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+  <h1>User {{ user.username }}</h1>
+
+    {% if items | count == 1 %}
+        <h2>{{ user.username }} has {{ items | count }} topic!</h2>
+    {% else %}
+        <h2>{{ user.username }} has {{ items | count }} topics!</h2>
+    {% endif %}
+    <ul>
+      {% for item in items %}
+        <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
+      {% endfor %}
+    </ul>
+
+<!-- returns the user to the last page -->
+  <p>
+    <button onclick="history.back()">Back</button>
+  </p>
+  
+</body>
+
+</html>

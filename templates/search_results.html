@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Topics on {{ query }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+
+  <div class="search-container">
+
+    <!--SEARCH BAR-->
+    <form action="/search" method="GET">
+      <p>Search: <input type="text" name="query" value="{{ query }}"> 
+      <input type="submit" value="Search"> </p>
+    </form>
+    
+
+    <!--DISCUSSIONS COLUMN-->
+
+  
+
+    {% if results %}
+        <h2>Disscussions about {{ query }}:</h2>
+        <ul>
+        {% for item in results %}
+            <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
+        {% endfor %}
+        </ul>
+
+    {% else %}
+        <h2>No disscussions about {{ query }} :(</h2>
+        <a href="/new_item">
+            <button style="background-color: rgb(128, 206, 135);">Create one!</button>
+        </a>
+    {% endif %}
+
+    <p>
+    <a href="/">Back home</a>
+    </p>
+  </div>
+    
+
+</body>
+</html>
