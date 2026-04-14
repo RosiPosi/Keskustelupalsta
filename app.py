@@ -23,7 +23,8 @@ def show_item(item_id):
     item = items.get_item(item_id)
     if not item:
         abort(404)
-    return render_template("show_item.html", item=item)
+    classes = items.get_classes(item_id)
+    return render_template("show_item.html", item=item, classes=classes)
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
@@ -48,12 +49,17 @@ def create_item():
     description = request.form["description"]
     user_id = session["user_id"]
 
+    classes = []
+    section = request.form["section"]
+    if section:
+        classes.append(("Category", section))
+
     if not title or len(title) > 50:
         abort(403)
     if len(description) > 1000:
         abort(403)
 
-    items.add_item(title, description, user_id)
+    items.add_item(title, description, user_id, classes)
 
     return redirect("/")
 
