@@ -23,10 +23,25 @@
   </p>
   {% endif %}
 <!-- returns the user to the last page -->
-  <p>
-    <button onclick="history.back()">Back</button>
-  </p>
-  
+  <a href="/">
+    <button>Back</button>
+  </a>
+  <ul>
+    {% for comment in comments %}
+    <p>
+    <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>: {{ comment.comment }}
+    </p>
+    {% endfor %}
+  </ul>
+    <form action="/comment" method="post">
+    <input type="hidden" name="item_id" value="{{ item.id }}">
+    <p>
+        Discuss: <br />
+        <textarea name="comment" rows="6" cols="60" maxlength="450" required></textarea>
+    </p>
+      <input type="submit" value="Post" />
+    </form>
+
 </body>
 
 </html>
