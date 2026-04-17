@@ -35,7 +35,9 @@
   </p>
   <ul>
     {% for comment in comments %}
-    <li> <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>: {{ comment.comment }} </li>
+    <p>
+    <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>: {{ comment.comment }}
+    </p>
     {% endfor %}
   </ul>
     <form action="/comment" method="post">

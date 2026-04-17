@@ -19,7 +19,7 @@ def get_comments(item_id):
             FROM comments, users
             WHERE comments.item_id = ? AND comments.user_id = users.id
             ORDER BY comments.id DESC"""
-    return db.execute(sql, [item_id])
+    return db.query(sql, [item_id])
 
 def get_classes(item_id):
     sql = "SELECT title, value FROM item_classes WHERE item_id = ?"
