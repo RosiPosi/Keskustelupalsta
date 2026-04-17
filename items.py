@@ -18,7 +18,7 @@ def get_comments(item_id):
     sql = """SELECT comments.comment, users.id user_id, users.username
             FROM comments, users
             WHERE comments.item_id = ? AND comments.user_id = users.id
-            ORDER BY comments.id DESC"""
+            ORDER BY comments.id"""
     return db.query(sql, [item_id])
 
 def get_classes(item_id):
