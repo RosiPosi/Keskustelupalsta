@@ -3,9 +3,10 @@
 
 <head>
   <title>Deleting</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
-<body style="background-color: rgb(249, 252, 255);">
+<body>
   <h1>Deleting your topic</h1>
   <p>Topic: {{ item.title }}</p>
   <p>Are you <b>sure</b> you want to <b>delete</b> this topic?</p>

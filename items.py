@@ -50,8 +50,10 @@ def update_item(item_id, title, description):
     db.execute(sql, [title, description, item_id])
 
 def remove_item(item_id):
-    sql = "DELETE FROM items WHERE id = ?"
-    db.execute(sql, [item_id])
+    db.execute("DELETE FROM comments WHERE item_id = ?", [item_id])
+    db.execute("DELETE FROM item_classes WHERE item_id = ?", [item_id])
+    db.execute("DELETE FROM items WHERE id = ?", [item_id])
+
 
 def search_results(query):
     sql = """SELECT id, title 

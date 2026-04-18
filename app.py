@@ -161,7 +161,7 @@ def create():
     except sqlite3.IntegrityError:
         return "ERROR: username already taken."
 
-    return "Account created! Return to the main page to log in."
+    return redirect("/login?registered=1")
 
 
 @app.route("/login", methods=["GET", "POST"])
