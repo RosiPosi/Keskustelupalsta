@@ -40,3 +40,13 @@ body {
     padding: 10px;
     display: inline-block;
 }
+
+.cat {
+  border-width: 3px;
+  border-radius: 25px;
+  border-style: solid;
+  background-color:rgb(128, 206, 135);
+  border-color:rgb(128, 206, 135);
+  padding: 5px;
+  display: inline-block;
+}

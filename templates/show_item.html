@@ -14,9 +14,9 @@
   <p>
     
     {% for class in classes %}
-    {{ class.title }}: {{ class.value }}
+    <p>Category: <span class="cat">{{ class.value }}</span></p>
     {% endfor %}
-    
+
   </p>
 
   <p>
@@ -29,15 +29,17 @@
     <a href="/remove_item/{{ item.id }}">Delete</a>  
   </p>
   {% endif %}
-<!-- returns the user to the last page -->
   <p>
-    <button onclick="history.back()">Back</button>
+    <a href="/"><button>Back</button></a>
   </p>
+  <h2>Discussion:</h2>
   <ul>
     {% for comment in comments %}
     <p>
     <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>: {{ comment.comment }}
     </p>
+    {% else %}
+    <p>No messages yet!</p>
     {% endfor %}
   </ul>
     <form action="/comment" method="post">
