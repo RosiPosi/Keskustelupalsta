@@ -3,9 +3,10 @@
 
 <head>
   <title>New topic</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
-<body style="background-color: rgb(249, 252, 255);">
+<body>
   <h1>New topic</h1>
   <form action="/create_item" method="post">
     <p>
