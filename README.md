@@ -22,4 +22,4 @@ Käynnistys:
 - Linux: $ flask run 
 - Windows: flask run
 
-Vaihda config.py secret code, jotta session toimisi paremmin!
+Vaihda config.py secret key, jotta session toimisi paremmin!
