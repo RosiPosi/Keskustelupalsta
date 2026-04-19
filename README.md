@@ -21,3 +21,5 @@ Luo tietokannan taulut ja lisää alkutiedot:
 Käynnistys:
 - Linux: $ flask run 
 - Windows: flask run
+
+Vaihda config.py secret code, jotta session toimisi paremmin!
