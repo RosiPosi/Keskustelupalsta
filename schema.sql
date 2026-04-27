@@ -25,7 +25,7 @@ CREATE TABLE classes (
 );
 
 CREATE TABLE item_classes (
-    if INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     item_id INTEGER REFERENCES items,
     title TEXT,
     value TEXT
