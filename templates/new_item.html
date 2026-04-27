@@ -19,10 +19,10 @@
     </p>
     {% for class in classes %}
     <p>{{ class }} <br />
-      <select name="">
+      <select name="classes">
         <option value="">(choose)</option>
       {% for option in classes[class] %}
-        <option value="{{ option }}">{{ option }}</option>
+        <option value="{{ class }}:{{ option }}">{{ option }}</option>
       {% endfor %}
       </select>
     </p>

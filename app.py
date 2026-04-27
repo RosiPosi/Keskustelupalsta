@@ -5,6 +5,9 @@ import config
 import items
 import users
 
+print("USING ITEMS FILE:", items.__file__)
+
+
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
@@ -51,15 +54,16 @@ def create_item():
     description = request.form["description"]
     user_id = session["user_id"]
 
-    classes = []
-    section = request.form["section"]
-    if section:
-        classes.append(("Category", section))
-
     if not title or len(title) > 50:
         abort(403)
     if len(description) > 1000:
         abort(403)
+
+    classes = []
+    for entry in request.form.getlist["classes"]:
+        if entry:
+            parts = entry.split(":")
+            classes.append((parts[0], parts[1]))
 
     items.add_item(title, description, user_id, classes)
 

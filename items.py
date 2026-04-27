@@ -1,5 +1,15 @@
 import db
 
+def get_all_classes():
+    sql = "SELECT title, value FROM classes ORDER BY id"
+    rows = list(db.query(sql))
+
+    classes = {}
+    for title, value in rows:
+        classes.setdefault(title, []).append(value)
+
+    return classes
+
 def add_item(title, description, user_id, classes):
     sql = "INSERT INTO items (title, description, user_id) VALUES (?, ?, ?)"
     db.execute(sql, [title, description, user_id])
