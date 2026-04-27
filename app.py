@@ -40,7 +40,8 @@ def show_user(user_id):
 @app.route("/new_item")
 def new_item():
     check_login()
-    return render_template("new_item.html")
+    classes = items.get_all_classes()
+    return render_template("new_item.html", classes=classes)
 
 @app.route("/create_item", methods=["POST"])
 def create_item():
