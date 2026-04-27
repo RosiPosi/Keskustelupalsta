@@ -60,7 +60,7 @@ def create_item():
         abort(403)
 
     classes = []
-    for entry in request.form.getlist["classes"]:
+    for entry in request.form.getlist("classes"):
         if entry:
             parts = entry.split(":")
             classes.append((parts[0], parts[1]))
