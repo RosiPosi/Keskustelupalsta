@@ -2,7 +2,6 @@ from flask import Flask
 import sqlite3
 from flask import abort, redirect, render_template, request, session
 import config
-import db
 import items
 import users
 
