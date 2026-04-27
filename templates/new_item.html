@@ -18,9 +18,9 @@
       <textarea name="description" rows="7" cols="60" maxlength="1000" placeholder="Add some context! This is optional."></textarea>>
     </p>
     {% for class in classes %}
-    <p>Category: <br />
+    <p>{{ class }} <br />
       <select name="">
-        <option value="life">life</option>
+        <option value="">(choose)</option>
       {% for option in classes[class] %}
         <option value="{{ option }}">{{ option }}</option>
       {% endfor %}
