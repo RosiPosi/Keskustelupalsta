@@ -1,3 +1,6 @@
+Pylint antaa seuraavan raportin sovelluksesta:
+
+```
 app.py:31:72: C0303: Trailing whitespace (trailing-whitespace)
 app.py:114:72: C0303: Trailing whitespace (trailing-whitespace)
 app.py:126:0: C0303: Trailing whitespace (trailing-whitespace)
@@ -79,3 +82,4 @@ users.py:2:0: C0411: third party import "werkzeug.security.check_password_hash" 
 
 ------------------------------------------------------------------
 Your code has been rated at 7.28/10 (previous run: 7.05/10, +0.23)
+```
