@@ -17,8 +17,8 @@ def add_item(title, description, user_id, classes):
     item_id = db.last_insert_id()
 
     sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
-    for title, value in classes:
-        db.execute(sql, [item_id, title, value])
+    for class_title, class_value in classes:
+        db.execute(sql, [item_id, class_title, class_value])
 
 def add_comment(item_id, user_id, comment):
     sql = "INSERT INTO comments (item_id, user_id, comment) VALUES (?, ?, ?)"
@@ -69,7 +69,7 @@ def get_item(item_id):
     return result[0] if result else None
 
 def update_item(item_id, title, description, classes):
-    sql = """UPDATE items SET 
+    sql = """UPDATE items SET
                     title = ?,
                     description = ?
                     WHERE id = ?
@@ -80,8 +80,8 @@ def update_item(item_id, title, description, classes):
     db.execute(sql, [item_id])
 
     sql = "INSERT INTO item_classes (item_id, title, value) VALUES (?, ?, ?)"
-    for title, value in classes:
-        db.execute(sql, [item_id, title, value])
+    for class_title, class_value in classes:
+        db.execute(sql, [item_id, class_title, class_value])
 
 def remove_item(item_id):
     db.execute("DELETE FROM comments WHERE item_id = ?", [item_id])
@@ -91,7 +91,7 @@ def remove_item(item_id):
 
 
 def search_results(query):
-    sql = """SELECT id, title 
+    sql = """SELECT id, title
                 FROM items
                 WHERE title LIKE ? OR description LIKE ?
                 ORDER BY id DESC"""
