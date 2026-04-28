@@ -28,8 +28,9 @@ def show_item(item_id):
     classes = items.get_classes(item_id)
     comments = items.get_comments(item_id)
     images = items.get_images(item_id)
+    reaction_counts = items.get_reaction_counts(item_id)
     return render_template("show_item.html", item=item, classes=classes, 
-                           comments=comments, images=images)
+                           comments=comments, images=images, reaction_counts=reaction_counts)
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
@@ -81,6 +82,7 @@ def comment():
     check_login()
 
     comment = request.form["comment"]
+    reaction = request.form["reaction"]
 
     if not comment or len(comment) > 450:
         abort(403)
@@ -91,7 +93,7 @@ def comment():
         abort(403)
     user_id = session["user_id"]
 
-    items.add_comment(item_id, user_id, comment)
+    items.add_comment(item_id, user_id, comment, reaction)
 
     return redirect("/item/" + str(item_id))
 

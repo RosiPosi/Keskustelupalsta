@@ -20,16 +20,31 @@ def add_item(title, description, user_id, classes):
     for class_title, class_value in classes:
         db.execute(sql, [item_id, class_title, class_value])
 
-def add_comment(item_id, user_id, comment):
-    sql = "INSERT INTO comments (item_id, user_id, comment) VALUES (?, ?, ?)"
-    db.execute(sql, [item_id, user_id, comment])
+def add_comment(item_id, user_id, comment, reaction):
+    sql = "INSERT INTO comments (item_id, user_id, comment, reaction) VALUES (?, ?, ?, ?)"
+    db.execute(sql, [item_id, user_id, comment, reaction])
 
 def get_comments(item_id):
-    sql = """SELECT comments.comment, users.id user_id, users.username
+    sql = """SELECT comments.comment, comments.reaction,
+            users.id user_id, users.username
             FROM comments, users
             WHERE comments.item_id = ? AND comments.user_id = users.id
             ORDER BY comments.id"""
     return db.query(sql, [item_id])
+
+def get_reaction_counts(item_id):
+    sql = """SELECT reaction, COUNT(*)
+            FROM comments
+            WHERE item_id = ?
+            GROUP BY reaction"""
+    rows = db.query(sql, [item_id])
+
+    counts = {"yes": 0, "meh": 0, "no": 0}
+
+    for reaction, count in rows:
+        counts[reaction] = count
+
+    return counts
 
 def get_images(item_id):
     sql = "SELECT id FROM images WHERE item_id = ?"

@@ -22,7 +22,7 @@
   
 
     {% if results %}
-        <h2>Disscussions about {{ query }}:</h2>
+        <h2>Opinions about {{ query }}:</h2>
         <ul>
         {% for item in results %}
             <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
@@ -30,7 +30,7 @@
         </ul>
 
     {% else %}
-        <h2>No disscussions about {{ query }} :(</h2>
+        <h2>No opinions about {{ query }} :(</h2>
         <a href="/new_item">
             <button style="background-color: rgb(128, 206, 135);">Create one!</button>
         </a>

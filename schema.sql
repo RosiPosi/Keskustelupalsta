@@ -15,7 +15,8 @@ CREATE TABLE comments (
     id INTEGER PRIMARY KEY,
     item_id INTEGER REFERENCES items,
     user_id INTEGER REFERENCES users,
-    comment TEXT
+    comment TEXT,
+    reaction TEXT
 );
 
 CREATE TABLE classes (
@@ -36,3 +37,4 @@ CREATE TABLE images (
     item_id INTEGER REFERENCES items,
     image BLOB
 );
+
