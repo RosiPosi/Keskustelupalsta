@@ -1,6 +1,6 @@
-from flask import Flask
 import sqlite3
-from flask import abort, redirect, render_template, request, session
+from flask import Flask
+from flask import abort, make_response, redirect, render_template, request, session
 import config
 import items
 import users
@@ -27,8 +27,8 @@ def show_item(item_id):
         abort(404)
     classes = items.get_classes(item_id)
     comments = items.get_comments(item_id)
-    print("COMMENTS:", comments)
-    return render_template("show_item.html", item=item, classes=classes, comments=comments)
+    images = items.get_images(item_id)
+    return render_template("show_item.html", item=item, classes=classes, comments=comments, images=images)
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
@@ -161,6 +161,54 @@ def remove_item(item_id):
             return redirect("/")
         else:
             return redirect("/item/" + str(item_id))
+        
+# IMAGES
+
+@app.route("/add_image", methods=["POST"])
+def add_image():
+    check_login()
+
+    item_id = request.form["item_id"]
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item[ "user_id"] != session["user_id"]:
+        abort(403)
+
+    if request.method == "POST":
+        file = request.files["image"]
+        if not file.filename.endswith(".jpg") or not file.filename.endswith(".png"):
+            return "Wrong file format: Only png or jpg accepted!"
+
+        image = file.read()
+        if len(image) > 100 * 1024:
+            return "Image too large!"
+
+        items.add_image(item_id, image)
+        return redirect("/images/" + str(item_id))
+        
+@app.route("/images/<int:item_id>")
+def edit_images(item_id):
+    check_login()
+    item = items.get_item(item_id)
+    if not item:
+        abort(404)
+    if item[ "user_id"] != session["user_id"]:
+        abort(403)
+
+    images = items.get_images(item_id)
+
+    return render_template("images.html", item=item, images=images)
+
+@app.route("/image/<int:image_id>")
+def show_image(user_id):
+    image = items.get_image(image_id)
+    if not image:
+        abort(404)
+
+    response = make_response(bytes(image))
+    response.headers.set("Content-Type", "image/jpg", "image/png")
+    return response
         
 # SEARCHING
 @app.route("/search")

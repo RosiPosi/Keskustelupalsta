@@ -8,6 +8,9 @@
 
 <body>
   <h1>{{ item.title }}</h1>
+  {% for image in images %}
+  <img src="/image/{{ item.id }}"/>
+  {% endfor %}
 
   <div class="border" style="white-space: pre-wrap;">{{ item.description }}</div>
 
@@ -27,6 +30,8 @@
   <p>
     <a href="/edit_item/{{ item.id }}">Edit</a>
     <a href="/remove_item/{{ item.id }}">Delete</a>  
+    <a href="/images/{{ item.id }}">Images</a>  
+
   </p>
   {% endif %}
   <p>
