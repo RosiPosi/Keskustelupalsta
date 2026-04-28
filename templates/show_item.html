@@ -7,54 +7,57 @@
 </head>
 
 <body>
-  <p>
-    Started by: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
-  </p>
-  <h1>{{ item.title }}</h1>
-  <p>{% for image in images %}
-  <img src="/image/{{ image.id }}"/>
-  {% endfor %}
-  </p>
-
-  <div class="border" style="white-space: pre-wrap;">{{ item.description }}</div>
-
-  <p>
+  <div class="post-page">
+    <p>
+      Started by: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
+    </p>
     
-    {% for class in classes %}
-    <p>Category: <span class="cat">{{ class.value }}</span></p>
-    {% endfor %}
-
-  </p>
-
-  {% if session.user_id == item.user_id %}
-  <p>
-    <a href="/edit_item/{{ item.id }}">Edit</a>
-    <a href="/remove_item/{{ item.id }}">Delete</a>  
-    <a href="/images/{{ item.id }}">Images</a>  
-
-  </p>
-  {% endif %}
-  <p>
-    <a href="/"><button>Back</button></a>
-  </p>
-  <h2>Discussion:</h2>
-  <ul>
-    {% for comment in comments %}
     <p>
-    <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>: {{ comment.comment }}
+      
+      {% for class in classes %}
+      <p>Category: <span class="cat">{{ class.value }}</span></p>
+      {% endfor %}
+
     </p>
-    {% else %}
-    <p>No messages yet!</p>
+    
+    <h1>{{ item.title }}</h1>
+    <p>{% for image in images %}
+    <img src="/image/{{ image.id }}"/>
     {% endfor %}
-  </ul>
-    <form action="/comment" method="post">
-    <input type="hidden" name="item_id" value="{{ item.id }}">
-    <p>
-        Discuss: <br />
-        <textarea name="comment" rows="6" cols="60" maxlength="450" required></textarea>
     </p>
-      <input type="submit" value="Post" />
-    </form>
+
+    <div class="border" style="white-space: pre-wrap;">{{ item.description }}</div>
+
+    {% if session.user_id == item.user_id %}
+    <p>
+      <a href="/edit_item/{{ item.id }}">Edit</a>
+      <a href="/remove_item/{{ item.id }}">Delete</a>  
+      <a href="/images/{{ item.id }}">Images</a>  
+
+    </p>
+    {% endif %}
+    <p>
+      <a href="/"><button>Back</button></a>
+    </p>
+    <h2>Discussion:</h2>
+    <ul>
+      {% for comment in comments %}
+      <p>
+      <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>: {{ comment.comment }}
+      </p>
+      {% else %}
+      <p>No messages yet!</p>
+      {% endfor %}
+    </ul>
+      <form action="/comment" method="post">
+      <input type="hidden" name="item_id" value="{{ item.id }}">
+      <p>
+          Discuss: <br />
+          <textarea name="comment" rows="6" cols="60" maxlength="450" required></textarea>
+      </p>
+        <input type="submit" value="Post" />
+      </form>
+  </div>
 </body>
 
 </html>

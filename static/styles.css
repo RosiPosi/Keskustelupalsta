@@ -8,12 +8,15 @@
   width: 60%;
 }
 
-
-
 @media screen and (max-width: 800px) {
   .left, .main, .right {
     width: 100%;
   }
+}
+
+.post-page {
+  width: 60%;
+  margin: 0 auto;
 }
 
 body {

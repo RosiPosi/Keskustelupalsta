@@ -181,7 +181,7 @@ def add_image():
             return "Wrong file format: Only png accepted!"
 
         image = file.read()
-        if len(image) > 100 * 1024:
+        if len(image) > 1920 * 1080:
             return "Image too large!"
 
         items.add_image(item_id, image)
