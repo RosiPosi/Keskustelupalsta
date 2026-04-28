@@ -57,9 +57,9 @@ def add_vote(item_id, user_id, reaction):
     db.execute(sql, [item_id, user_id, reaction])
 
 def has_user_voted(item_id, user_id):
-    sql = "SELECT id FROM votes WHERE item_id = ? AND user_id = ?"
+    sql = "SELECT reaction FROM votes WHERE item_id = ? AND user_id = ?"
     result = db.query(sql, [item_id, user_id])
-    return len(result) > 0
+    return result[0][0] if result else None
 
 def get_images(item_id):
     sql = "SELECT id FROM images WHERE item_id = ?"

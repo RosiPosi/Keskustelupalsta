@@ -69,8 +69,8 @@
 
       <p>
         <h2>Vote</h2>
-        {% if already_voted %}
-        <p>You already voted: {{ user_vote.reaction | upper }}</p>
+        {% if user_vote %}
+          <p>You already voted: {{ user_vote | upper }}</p>
         {% else %}
         <form action="/vote" method="post">
             <input type="hidden" name="item_id" value="{{ item.id }}">

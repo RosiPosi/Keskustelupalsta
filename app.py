@@ -29,8 +29,10 @@ def show_item(item_id):
     comments = items.get_comments(item_id)
     images = items.get_images(item_id)
     reaction_counts = items.get_reaction_counts(item_id)
+    user_vote = items.has_user_voted(item_id, session["user_id"])
     return render_template("show_item.html", item=item, classes=classes, 
-                           comments=comments, images=images, reaction_counts=reaction_counts)
+                           comments=comments, images=images, 
+                           reaction_counts=reaction_counts, user_vote=user_vote)
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
