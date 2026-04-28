@@ -13,15 +13,15 @@
     {{ images | count }} images attached.
   </p>
 
-    <form action="remove_images" method="post">
-    {% for image in images %}
-    <input type="checkbox" name="image_id" value="{{ image.id }}">
-    <img src="/image/{{ image.id }}"/>
-    {% endfor %}
-    <input type="hidden" name="item_id" value="{{ item.id }}">
-    <p>
-        <input type="submit" value="Remove selected" />
-    </p>
+    <form action="/remove_images" method="post">
+        {% for image in images %}
+        <input type="checkbox" name="image_id" value="{{ image.id }}">
+        <img src="/image/{{ image.id }}"/>
+        {% endfor %}
+        <input type="hidden" name="item_id" value="{{ item.id }}">
+        <p>
+            <input type="submit" value="Remove selected" />
+        </p>
     </form>
 
     <h2>Add images:</h2>
