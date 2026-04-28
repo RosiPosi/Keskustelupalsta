@@ -50,3 +50,8 @@ body {
   padding: 5px;
   display: inline-block;
 }
+
+img {
+    width: 200px;
+    height: auto;
+}

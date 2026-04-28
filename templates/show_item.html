@@ -7,10 +7,14 @@
 </head>
 
 <body>
+  <p>
+    Started by: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
+  </p>
   <h1>{{ item.title }}</h1>
-  {% for image in images %}
-  <img src="/image/{{ item.id }}"/>
+  <p>{% for image in images %}
+  <img src="/image/{{ image.id }}"/>
   {% endfor %}
+  </p>
 
   <div class="border" style="white-space: pre-wrap;">{{ item.description }}</div>
 
@@ -20,10 +24,6 @@
     <p>Category: <span class="cat">{{ class.value }}</span></p>
     {% endfor %}
 
-  </p>
-
-  <p>
-    Started by: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
   </p>
 
   {% if session.user_id == item.user_id %}
