@@ -15,8 +15,15 @@ CREATE TABLE comments (
     id INTEGER PRIMARY KEY,
     item_id INTEGER REFERENCES items,
     user_id INTEGER REFERENCES users,
-    comment TEXT,
-    reaction TEXT
+    comment TEXT
+);
+
+CREATE TABLE votes (
+    id INTEGER PRIMARY KEY,
+    item_id INTEGER REFERENCES items,
+    user_id INTEGER REFERENCES users,
+    reaction TEXT,
+    UNIQUE(item_id, user_id)
 );
 
 CREATE TABLE classes (

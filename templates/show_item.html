@@ -41,35 +41,58 @@
     </p>
 
     <h2>Community Poll</h2>
-    <p>Yes: {{ reaction_counts.yes }}</p>
-    <p>Meh: {{ reaction_counts.meh }}</p>
-    <p>No: {{ reaction_counts.no }}</p>
+    <div class="poll-results">
+        <span>Yes: {{ reaction_counts.yes }}</span>
+        <span>Meh: {{ reaction_counts.meh }}</span>
+        <span>No: {{ reaction_counts.no }}</span>
+    </div>
 
     <h2>Discussion:</h2>
     <ul>
       {% for comment in comments %}
       <p>
-      <a href="/user/{{ comment.user_id }}">{{ comment.username }}</a>[{{ comment.reaction | upper }}]: {{ comment.comment }}
-      </p>
+      <a href="/user/{{ comment.user_id }}">
+          {{ comment.username }}
+      </a>
+
+      {% if comment.reaction %}
+          [{{ comment.reaction|upper }}]
+      {% endif %}
+
+      : {{ comment.comment }}
+            </p>
       {% else %}
+
       <p>No messages yet!</p>
       {% endfor %}
     </ul>
-      <form action="/comment" method="post">
-      <input type="hidden" name="item_id" value="{{ item.id }}">
+
       <p>
-        Reaction:
+        <h2>Vote</h2>
+        {% if already_voted %}
+        <p>You already voted: {{ user_vote.reaction | upper }}</p>
+        {% else %}
+        <form action="/vote" method="post">
+            <input type="hidden" name="item_id" value="{{ item.id }}">
+
         <select name="reaction" required>
-            <p><option value="yes">Yes</option></p>
-            <p><option value="meh">Meh</option></p>
-            <p><option value="no">No</option></p>
+            <option value="yes">Yes</option>
+            <option value="meh">Meh</option>
+            <option value="no">No</option>
         </select>
+
+            <input type="submit" value="Vote">
+        </form>
+        {% endif %}
       </p>
-      <p>
-          Discuss: <br />
-          <textarea name="comment" rows="6" cols="60" maxlength="450" required></textarea>
-      </p>
-        <input type="submit" value="Post" />
+
+      <form action="/comment" method="post">
+        <input type="hidden" name="item_id" value="{{ item.id }}">
+        <p>
+            Discuss: <br />
+            <textarea name="comment" rows="6" cols="60" maxlength="450" required></textarea>
+        </p>
+          <input type="submit" value="Post" />
       </form>
   </div>
 </body>

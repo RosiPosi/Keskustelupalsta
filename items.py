@@ -20,21 +20,27 @@ def add_item(title, description, user_id, classes):
     for class_title, class_value in classes:
         db.execute(sql, [item_id, class_title, class_value])
 
-def add_comment(item_id, user_id, comment, reaction):
-    sql = "INSERT INTO comments (item_id, user_id, comment, reaction) VALUES (?, ?, ?, ?)"
-    db.execute(sql, [item_id, user_id, comment, reaction])
+def add_comment(item_id, user_id, comment):
+    sql = "INSERT INTO comments (item_id, user_id, comment) VALUES (?, ?, ?)"
+    db.execute(sql, [item_id, user_id, comment])
 
 def get_comments(item_id):
-    sql = """SELECT comments.comment, comments.reaction,
-            users.id user_id, users.username
-            FROM comments, users
-            WHERE comments.item_id = ? AND comments.user_id = users.id
+    sql = """SELECT comments.comment,
+               users.id AS user_id,
+               users.username,
+               votes.reaction
+            FROM comments
+            JOIN users ON comments.user_id = users.id
+            LEFT JOIN votes
+            ON votes.item_id = comments.item_id
+            AND votes.user_id = comments.user_id
+            WHERE comments.item_id = ?
             ORDER BY comments.id"""
     return db.query(sql, [item_id])
 
 def get_reaction_counts(item_id):
     sql = """SELECT reaction, COUNT(*)
-            FROM comments
+            FROM votes
             WHERE item_id = ?
             GROUP BY reaction"""
     rows = db.query(sql, [item_id])
@@ -45,6 +51,15 @@ def get_reaction_counts(item_id):
         counts[reaction] = count
 
     return counts
+
+def add_vote(item_id, user_id, reaction):
+    sql = "INSERT INTO votes (item_id, user_id, reaction) VALUES (?, ?, ?)"
+    db.execute(sql, [item_id, user_id, reaction])
+
+def has_user_voted(item_id, user_id):
+    sql = "SELECT id FROM votes WHERE item_id = ? AND user_id = ?"
+    result = db.query(sql, [item_id, user_id])
+    return len(result) > 0
 
 def get_images(item_id):
     sql = "SELECT id FROM images WHERE item_id = ?"
@@ -99,6 +114,7 @@ def update_item(item_id, title, description, classes):
         db.execute(sql, [item_id, class_title, class_value])
 
 def remove_item(item_id):
+    db.execute("DELETE FROM votes WHERE id = ?", [item_id])
     db.execute("DELETE FROM comments WHERE item_id = ?", [item_id])
     db.execute("DELETE FROM item_classes WHERE item_id = ?", [item_id])
     db.execute("DELETE FROM images WHERE item_id = ?", [item_id])

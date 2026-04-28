@@ -40,6 +40,20 @@ def show_user(user_id):
     user_items = users.get_item(user_id)
     return render_template("show_user.html", user=user, items=user_items)
 
+@app.route("/vote", methods=["POST"])
+def vote():
+    check_login()
+
+    item_id = request.form["item_id"]
+    reaction = request.form["reaction"]
+
+    if items.has_user_voted(item_id, session["user_id"]):
+        return "You have already voted."
+
+    items.add_vote(item_id, session["user_id"], reaction)
+
+    return redirect("/item/" + str(item_id))
+
 # POSTING / EDITING
 
 @app.route("/new_item")
@@ -82,7 +96,6 @@ def comment():
     check_login()
 
     comment = request.form["comment"]
-    reaction = request.form["reaction"]
 
     if not comment or len(comment) > 450:
         abort(403)
@@ -93,7 +106,7 @@ def comment():
         abort(403)
     user_id = session["user_id"]
 
-    items.add_comment(item_id, user_id, comment, reaction)
+    items.add_comment(item_id, user_id, comment)
 
     return redirect("/item/" + str(item_id))
 
