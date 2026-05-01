@@ -18,6 +18,13 @@
     <a href="/logout">Log out</a>
   </p>
   {% else %}
+
+  {% for message in get_flashed_messages() %}
+  <p>
+    <b>{{ message }}</b>
+  </p>
+  {% endfor %}
+  
   <form action="/login" method="post">
     <p>
       Username: <br />

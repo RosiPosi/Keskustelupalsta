@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import abort, make_response, redirect, render_template, request, session
+from flask import abort, flash, make_response, redirect, render_template, request, session
 import config
 import items
 import users
@@ -197,11 +197,14 @@ def add_image():
     if request.method == "POST":
         file = request.files["image"]
         if not file.filename.lower().endswith((".png")):
-            return "Wrong file format: Only png accepted!"
+            flash("ERROR: PNG files only!")
+            return redirect("/images/" + str(item_id))
 
         image = file.read()
         if len(image) > 1920 * 1080:
-            return "Image too large!"
+            flash("ERROR: Your file is too big!")
+            return redirect("/images/" + str(item_id))
+
 
         items.add_image(item_id, image)
         return redirect("/images/" + str(item_id))
@@ -268,12 +271,14 @@ def create():
     password1 = request.form["password1"]
     password2 = request.form["password2"]
     if password1 != password2:
-        return "ERROR: passwords don't match."
+        flash("ERROR: Passwords don't match.")
+        return render_template("register.html")
     
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
-        return "ERROR: username already taken."
+        flash("ERROR: Username already taken.")
+        return render_template("register.html")
 
     return redirect("/login?registered=1")
 
@@ -293,7 +298,8 @@ def login():
         session["username"] = username
         return redirect("/")
     else:
-        return "ERROR: wrong username or password."
+        flash("ERROR: wrong username or password.")
+        return render_template("login.html")
 
 @app.route("/logout")
 def logout():
