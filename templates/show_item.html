@@ -80,7 +80,7 @@
             <option value="meh">Meh</option>
             <option value="no">No</option>
         </select>
-
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
             <input type="submit" value="Vote">
         </form>
         {% endif %}
@@ -92,6 +92,7 @@
             Discuss: <br />
             <textarea name="comment" rows="6" cols="60" maxlength="450" required></textarea>
         </p>
+          <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
           <input type="submit" value="Post" />
       </form>
   </div>

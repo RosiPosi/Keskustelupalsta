@@ -15,6 +15,10 @@ def check_login():
     if "user_id" not in session:
         abort(403)
 
+def check_csrf():
+    if request.form["csrf_token"] != session["csrf_token"]:
+        abort(403)
+
 @app.route("/")
 def index():
     all_items = items.get_items()
@@ -77,6 +81,7 @@ def new_item():
 @app.route("/create_item", methods=["POST"])
 def create_item():
     check_login()
+    check_csrf()
 
     title = request.form["title"]
     description = request.form["description"]
@@ -143,6 +148,9 @@ def edit_item(item_id):
 
 @app.route("/update_item", methods=["POST"])
 def update_item():
+    check_login()
+    check_csrf()
+
     item_id = request.form["item_id"]
 
     item = items.get_item(item_id)
@@ -175,6 +183,8 @@ def update_item():
 
 @app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
+    check_login()
+
     item = items.get_item(item_id)
     if not item:
         abort(404)
@@ -185,6 +195,7 @@ def remove_item(item_id):
         return render_template("remove_item.html", item=item)
     
     if request.method == "POST":
+        check_csrf()
         if "remove" in request.form:
             items.remove_item(item_id)
             return redirect("/")
@@ -196,6 +207,7 @@ def remove_item(item_id):
 @app.route("/add_image", methods=["POST"])
 def add_image():
     check_login()
+    check_csrf()
 
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
@@ -245,6 +257,7 @@ def show_image(image_id):
 @app.route("/remove_images", methods=["POST"])
 def remove_images():
     check_login()
+    check_csrf()
 
     item_id = request.form["item_id"]
     item = items.get_item(item_id)
@@ -306,6 +319,7 @@ def login():
     if user_id:
         session["user_id"] = user_id
         session["username"] = username
+        session["csrf_token"] = secrets.token_hex(16)
         return redirect("/")
     else:
         flash("ERROR: wrong username or password.")
