@@ -11,7 +11,7 @@
   <div class="left">
     <h2>Account</h2>
     {% if session.username %}
-      <p>You're logged in as {{ session.username }}</p>
+      <p>You're logged in as <a href="/user/{{ session.user_id }}">{{ session.username }}</a></p>
       <p>You are the #{{ session.user_id }} user created!</p>
     {% endif %}
 

@@ -49,7 +49,17 @@ def vote():
     item_id = request.form["item_id"]
     reaction = request.form["reaction"]
 
+    allowed = {"yes", "meh", "no"}
+
+    if reaction not in allowed:
+        return "Invalid reaction."
+    
     if items.has_user_voted(item_id, session["user_id"]):
+        return "You have already voted."
+
+    try:
+        items.add_vote(item_id, session["user_id"], reaction)
+    except sqlite3.IntegrityError:
         return "You have already voted."
 
     items.add_vote(item_id, session["user_id"], reaction)
