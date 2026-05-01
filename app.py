@@ -1,3 +1,4 @@
+import secrets
 import sqlite3
 from flask import Flask
 from flask import abort, flash, make_response, redirect, render_template, request, session
@@ -16,6 +17,8 @@ def check_login():
         abort(403)
 
 def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
