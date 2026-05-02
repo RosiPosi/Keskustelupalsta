@@ -312,7 +312,7 @@ def create():
     password2 = request.form["password2"]
     if password1 != password2:
         flash("ERROR: Passwords don't match.")
-        return render_template("register.html")
+        return redirect("/register")
     
     if " " in username:
         abort(403)
@@ -321,7 +321,7 @@ def create():
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
         flash("ERROR: Username already taken.")
-        return render_template("register.html")
+        return redirect("/register")
 
     return redirect("/login?registered=1")
 
