@@ -26,7 +26,7 @@
     {% endfor %}
     </p>
 
-    <div class="border" style="white-space: pre-wrap;">{{ item.description }}</div>
+    <div class="border">{{ item.description | show_lines }}</div>
 
     {% if session.user_id == item.user_id %}
     <p>
