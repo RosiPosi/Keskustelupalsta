@@ -36,7 +36,7 @@ def index():
     all_items = items.get_items()
     return render_template("index.html", items=all_items)
 
-@app.route("/item/<int:item_id>")
+@app.route("/opinion/<int:item_id>")
 def show_item(item_id):
     item = items.get_item(item_id)
     if not item:
@@ -83,17 +83,17 @@ def vote():
         return "You have already voted."
 
 
-    return redirect("/item/" + str(item_id))
+    return redirect("/opinion/" + str(item_id))
 
 # POSTING / EDITING
 
-@app.route("/new_item")
+@app.route("/new_opinion")
 def new_item():
     check_login()
     classes = items.get_all_classes()
     return render_template("new_item.html", classes=classes)
 
-@app.route("/create_item", methods=["POST"])
+@app.route("/create_opinion", methods=["POST"])
 def create_item():
     check_login()
     check_csrf()
@@ -140,9 +140,9 @@ def comment():
 
     items.add_comment(item_id, user_id, comment)
 
-    return redirect("/item/" + str(item_id))
+    return redirect("/opinion/" + str(item_id))
 
-@app.route("/edit_item/<int:item_id>")
+@app.route("/edit_opinion/<int:item_id>")
 def edit_item(item_id):
     check_login()
     item = items.get_item(item_id)
@@ -161,7 +161,7 @@ def edit_item(item_id):
     return render_template("edit_item.html", item=item, classes=classes, 
                            all_classes=all_classes)
 
-@app.route("/update_item", methods=["POST"])
+@app.route("/update_opinion", methods=["POST"])
 def update_item():
     check_login()
     check_csrf()
@@ -196,9 +196,9 @@ def update_item():
 
     items.update_item(item_id, title, description, classes)
 
-    return redirect("/item/" + str(item_id))
+    return redirect("/opinion/" + str(item_id))
 
-@app.route("/remove_item/<int:item_id>", methods=["GET", "POST"])
+@app.route("/remove_opinion/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
     check_login()
 
@@ -217,7 +217,7 @@ def remove_item(item_id):
             items.remove_item(item_id)
             return redirect("/")
         else:
-            return redirect("/item/" + str(item_id))
+            return redirect("/opinion/" + str(item_id))
         
 # IMAGES
 

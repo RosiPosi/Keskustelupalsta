@@ -37,7 +37,7 @@
     <h1>Hot Takes</h1>
     {% if session.username %}
     <p>
-      Start a <a href="/new_item"><button style="background-color: rgb(128, 206, 135);">new topic</button></a>
+      Start a <a href="/new_opinion"><button class="button">new topic</button></a>
     </p>
     {% endif %}
 
@@ -49,7 +49,7 @@
     <ul>
       
       {% for item in items %}
-        <li><a href="/item/{{ item.id }}">{{ item.title }}</a></li>
+        <li><a href="/opinion/{{ item.id }}">{{ item.title }}</a></li>
       {% else %}
         No opinions yet.
       {% endfor %}

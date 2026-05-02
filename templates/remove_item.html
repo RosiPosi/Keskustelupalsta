@@ -10,7 +10,7 @@
   <h1>Deleting your topic</h1>
   <p>Topic: {{ item.title }}</p>
   <p>Are you <b>sure</b> you want to <b>delete</b> this topic?</p>
-  <form action="/remove_item/{{ item.id }}" method="post">
+  <form action="/remove_opinion/{{ item.id }}" method="post">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" name="remove" value="Delete">
     <input type="submit" name="back" value="Back">
