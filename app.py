@@ -1,7 +1,10 @@
 import secrets
 import sqlite3
+
 from flask import Flask
 from flask import abort, flash, make_response, redirect, render_template, request, session
+import markupsafe
+
 import config
 import items
 import users
@@ -22,6 +25,12 @@ def check_csrf():
     if request.form["csrf_token"] != session["csrf_token"]:
         abort(403)
 
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    return markupsafe.Markup(content)
+
 @app.route("/")
 def index():
     all_items = items.get_items()
@@ -40,7 +49,7 @@ def show_item(item_id):
     user_vote = None
     if "user_id" in session:
         user_vote = items.has_user_voted(item_id, session["user_id"])
-        
+
     return render_template("show_item.html", item=item, classes=classes, 
                            comments=comments, images=images, 
                            reaction_counts=reaction_counts, user_vote=user_vote)

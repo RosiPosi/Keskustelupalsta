@@ -59,7 +59,7 @@
           [{{ comment.reaction|upper }}]
       {% endif %}
 
-      : {{ comment.comment }}
+      : {{ comment.comment | show_lines }}
             </p>
       {% else %}
 
@@ -69,7 +69,7 @@
 
       <p>
         <h3>Vote:</h3> 
-        {% if session.user_id == item.user_id %}
+        {% if session.user_id %}
           {% if user_vote %}
             <p>You already voted: {{ user_vote | upper }}</p>
           {% else %}
@@ -94,7 +94,7 @@
         <input type="hidden" name="item_id" value="{{ item.id }}">
         <p>
             Discuss: <br />
-        {% if session.user_id == item.user_id %}
+        {% if session.user_id %}
             <textarea name="comment" rows="6" cols="60" maxlength="450" required></textarea>
         </p>
 
