@@ -1,4 +1,4 @@
-# Keskustelupalsta
+# Mielipidepalsta
 (Inspiraationa esim. Reddit ja Suomi24 tyyliset palvelut)
 
 - Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
