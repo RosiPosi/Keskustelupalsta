@@ -69,20 +69,24 @@
 
       <p>
         <h3>Vote:</h3> 
-        {% if user_vote %}
-          <p>You already voted: {{ user_vote | upper }}</p>
-        {% else %}
-        <form action="/vote" method="post">
-            <input type="hidden" name="item_id" value="{{ item.id }}">
+        {% if session.user_id == item.user_id %}
+          {% if user_vote %}
+            <p>You already voted: {{ user_vote | upper }}</p>
+          {% else %}
+          <form action="/vote" method="post">
+              <input type="hidden" name="item_id" value="{{ item.id }}">
 
-        <select name="reaction" required>
-            <option value="yes">Yes</option>
-            <option value="meh">Meh</option>
-            <option value="no">No</option>
-        </select>
-            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-            <input type="submit" value="Vote">
-        </form>
+          <select name="reaction" required>
+              <option value="yes">Yes</option>
+              <option value="meh">Meh</option>
+              <option value="no">No</option>
+          </select>
+              <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+              <input type="submit" value="Vote">
+          </form>
+          {% endif %}
+        {% else %}
+        <p><a href="/login">Log in</a> to give your vote!</p>
         {% endif %}
       </p>
 
@@ -90,10 +94,17 @@
         <input type="hidden" name="item_id" value="{{ item.id }}">
         <p>
             Discuss: <br />
+        {% if session.user_id == item.user_id %}
             <textarea name="comment" rows="6" cols="60" maxlength="450" required></textarea>
         </p>
+
           <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
           <input type="submit" value="Post" />
+
+        {% else %}
+        <p><a href="/login">Log in</a> to discuss this further!</p>
+        {% endif %}
+
       </form>
   </div>
 </body>

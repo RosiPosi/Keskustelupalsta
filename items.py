@@ -114,7 +114,7 @@ def update_item(item_id, title, description, classes):
         db.execute(sql, [item_id, class_title, class_value])
 
 def remove_item(item_id):
-    db.execute("DELETE FROM votes WHERE id = ?", [item_id])
+    db.execute("DELETE FROM votes WHERE item_id = ?", [item_id])
     db.execute("DELETE FROM comments WHERE item_id = ?", [item_id])
     db.execute("DELETE FROM item_classes WHERE item_id = ?", [item_id])
     db.execute("DELETE FROM images WHERE item_id = ?", [item_id])
