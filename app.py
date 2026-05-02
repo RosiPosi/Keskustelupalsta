@@ -148,7 +148,7 @@ def edit_item(item_id):
     item = items.get_item(item_id)
     if not item:
         abort(404)
-    if item[ "user_id"] != session["user_id"]:
+    if item["user_id"] != session["user_id"]:
         abort(403)
 
     all_classes = items.get_all_classes()
@@ -178,6 +178,8 @@ def update_item():
     description = request.form["description"]
 
     if not title or len(title) > 50:
+        abort(403)
+    if len(description) > 1000:
         abort(403)
 
     all_classes = items.get_all_classes()
@@ -311,6 +313,9 @@ def create():
     if password1 != password2:
         flash("ERROR: Passwords don't match.")
         return render_template("register.html")
+    
+    if " " in username:
+        abort(403)
     
     try:
         users.create_user(username, password1)

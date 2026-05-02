@@ -17,7 +17,8 @@
     <form action="/create" method="post">
       <p>
         Username: <br />
-        <input type="text" name="username" maxlength="15" required/>
+        <input type="text" name="username" maxlength="15" pattern="[^\s]*"
+        title="Username cannot contain spaces." required/>
       </p>
       <p>
         Password: <br />
