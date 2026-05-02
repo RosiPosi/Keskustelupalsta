@@ -1,13 +1,15 @@
 # Mielipidepalsta
-(Inspiraationa esim. Reddit ja Suomi24 tyyliset palvelut)
+Forum mielipiteille äänestyksillä.
 
 - Käyttäjä pystyy luomaan tunnuksen ja kirjautumaan sisään sovellukseen.
-- Lisäksi käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan lisäämiään aiheita.
-- Käyttäjä näkee sekä itse lisäämänsä että muiden käyttäjien lisäämät aiheet.
+- Käyttäjä pystyy lisäämään, muokkaamaan ja poistamaan lisäämiään aiheita.
+- Käyttäjä pystyy lisäämään kuvia omiin julkaisuihin.
+- Käyttäjä näkee sekä itse lisäämänsä että muiden käyttäjien lisäämät mielipiteet.
 - Käyttäjä pystyy etsimään aiheita hakusanalla tai muulla perusteella. 
-- Sovelluksessa on käyttäjäsivut, jotka näyttävät jokaisesta käyttäjästä tilastoja ja käyttäjän lisäämät aiheet ja kommentit.
-- Käyttäjä pystyy valitsemaan aiheelle yhden tai useamman kategorian. Mahdolliset kategoriat ovat esim. Sarjat ja elokuvat, Pelit, Anime ja Manga, Ruoka, Eläimet, Suhteet jne.
-- Sovelluksessa on pääasiallisen aiheen noston lisäksi aiheeseen kommentointi, joka jatkaa keskustelua. 
+- Sovelluksessa on käyttäjäsivut, jotka näyttävät jokaisesta käyttäjästä tilastoja ja käyttäjän lisäämät aiheet.
+- Käyttäjä pystyy valitsemaan mielipiteelle yhden kategorian. Mahdolliset kategoriat ovat esim. Urheilu, Pelit, Anime ja Manga, Ruoka, Eläimet, Suhteet jne.
+- Sovelluksessa pystyy lukemaan ja kirjoittamaan kommentteja, joka luo keskustelua. 
+- Sovelluksessa pystyy äänestämään "yes", "meh" tai "no" jokaiseen mielipiteeseen ja näkemään äänestyksen tilastot. Käyttäjät näkevät kommenteissa mitä kommentoija äänesti.
 
 # Asennus
 Asenna flask-kirjasto:
@@ -20,7 +22,6 @@ Luo tietokannan taulut ja lisää alkutiedot:
 
 - Windows: sqlite3.exe database.db ".read schema.sql"
 - Windows: sqlite3.exe database.db ".read init.sql"
-
 
 Käynnistys:
 - Linux: $ flask run 
