@@ -50,8 +50,8 @@ def show_item(item_id):
     if "user_id" in session:
         user_vote = items.has_user_voted(item_id, session["user_id"])
 
-    return render_template("show_item.html", item=item, classes=classes, 
-                           comments=comments, images=images, 
+    return render_template("show_item.html", item=item, classes=classes,
+                           comments=comments, images=images,
                            reaction_counts=reaction_counts, user_vote=user_vote)
 
 @app.route("/user/<int:user_id>")
@@ -73,7 +73,7 @@ def vote():
 
     if reaction not in allowed:
         return "Invalid reaction."
-    
+
     if items.has_user_voted(item_id, session["user_id"]):
         return "You have already voted."
 
@@ -127,9 +127,8 @@ def create_item():
 def comment():
     check_login()
 
-    comment = request.form["comment"]
-
-    if not comment or len(comment) > 450:
+    comment_text = request.form["comment"]
+    if not comment_text or len(comment_text) > 450:
         abort(403)
 
     item_id = request.form["item_id"]
@@ -138,7 +137,7 @@ def comment():
         abort(403)
     user_id = session["user_id"]
 
-    items.add_comment(item_id, user_id, comment)
+    items.add_comment(item_id, user_id, comment_text)
 
     return redirect("/opinion/" + str(item_id))
 
@@ -158,7 +157,7 @@ def edit_item(item_id):
     for entry in items.get_classes(item_id):
         classes[entry["title"]] = entry["value"]
 
-    return render_template("edit_item.html", item=item, classes=classes, 
+    return render_template("edit_item.html", item=item, classes=classes,
                            all_classes=all_classes)
 
 @app.route("/update_opinion", methods=["POST"])
@@ -173,7 +172,7 @@ def update_item():
         abort(404)
     if item["user_id"] != session["user_id"]:
         abort(403)
-        
+
     title = request.form["title"]
     description = request.form["description"]
 
@@ -210,7 +209,7 @@ def remove_item(item_id):
 
     if request.method == "GET":
         return render_template("remove_item.html", item=item)
-    
+
     if request.method == "POST":
         check_csrf()
         if "remove" in request.form:
@@ -218,7 +217,7 @@ def remove_item(item_id):
             return redirect("/")
         else:
             return redirect("/opinion/" + str(item_id))
-        
+
 # IMAGES
 
 @app.route("/add_image", methods=["POST"])
@@ -247,7 +246,7 @@ def add_image():
 
         items.add_image(item_id, image)
         return redirect("/images/" + str(item_id))
-        
+
 @app.route("/images/<int:item_id>")
 def edit_images(item_id):
     check_login()
@@ -287,7 +286,7 @@ def remove_images():
         items.remove_image(item_id, image_id)
 
     return redirect("/images/" + str(item_id))
-        
+
 # SEARCHING
 @app.route("/search")
 def search():
@@ -313,10 +312,10 @@ def create():
     if password1 != password2:
         flash("ERROR: Passwords don't match.")
         return redirect("/register")
-    
+
     if " " in username:
         abort(403)
-    
+
     try:
         users.create_user(username, password1)
     except sqlite3.IntegrityError:
@@ -331,19 +330,19 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
 
-    if request.method == "POST":      
+    if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
 
-    user_id = users.check_login(username, password)
-    if user_id:
-        session["user_id"] = user_id
-        session["username"] = username
-        session["csrf_token"] = secrets.token_hex(16)
-        return redirect("/")
-    else:
-        flash("ERROR: wrong username or password.")
-        return render_template("login.html")
+        user_id = users.check_login(username, password)
+        if user_id:
+            session["user_id"] = user_id
+            session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
+            return redirect("/")
+        else:
+            flash("ERROR: wrong username or password.")
+            return render_template("login.html")
 
 @app.route("/logout")
 def logout():
