@@ -16,7 +16,11 @@ Asenna flask-kirjasto:
 
 Luo tietokannan taulut ja lisää alkutiedot:
 - Linux: $ sqlite3 database.db < schema.sql
+- Linux: $ sqlite3 database.db < init.sql
+
 - Windows: sqlite3.exe database.db ".read schema.sql"
+- Windows: sqlite3.exe database.db ".read init.sql"
+
 
 Käynnistys:
 - Linux: $ flask run 

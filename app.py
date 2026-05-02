@@ -69,8 +69,6 @@ def vote():
     except sqlite3.IntegrityError:
         return "You have already voted."
 
-    items.add_vote(item_id, session["user_id"], reaction)
-
     return redirect("/item/" + str(item_id))
 
 # POSTING / EDITING

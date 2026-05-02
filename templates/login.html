@@ -7,36 +7,38 @@
 </head>
 
 <body>
-  {% if request.args.get('registered') %}
-  <p>You can now log in. Welcome!</p>
-  {% endif %}
-  {% if session.username %}
-  <p>
-    You're logged in as {{ session.username }}
-  </p>
-  <p>
-    <a href="/logout">Log out</a>
-  </p>
-  {% else %}
+  <div class="centered">
+    {% if request.args.get('registered') %}
+    <p>You can now log in. Welcome!</p>
+    {% endif %}
+    {% if session.username %}
+    <p>
+      You're logged in as {{ session.username }}
+    </p>
+    <p>
+      <a href="/logout">Log out</a>
+    </p>
+    {% else %}
 
-  {% for message in get_flashed_messages() %}
-  <p>
-    <b>{{ message }}</b>
-  </p>
-  {% endfor %}
-  
-  <form action="/login" method="post">
+    {% for message in get_flashed_messages() %}
     <p>
-      Username: <br />
-      <input type="text" name="username" />
+      <b>{{ message }}</b>
     </p>
-    <p>
-      Password: <br />
-      <input type="password" name="password" />
-    </p>
-    <input type="submit" value="Log in" />
-  </form>
-  {% endif %}
+    {% endfor %}
+    
+    <form action="/login" method="post">
+      <p>
+        Username: <br />
+        <input type="text" name="username" />
+      </p>
+      <p>
+        Password: <br />
+        <input type="password" name="password" />
+      </p>
+      <input type="submit" value="Log in" />
+    </form>
+    {% endif %}
+  </div>
 </body>
 
 </html>

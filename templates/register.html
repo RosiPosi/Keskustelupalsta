@@ -7,28 +7,29 @@
 </head>
 
 <body>
+  <div class="centered">
+    {% for message in get_flashed_messages() %}
+    <p>
+      <b>{{ message }}</b>
+    </p>
+    {% endfor %}
 
-  {% for message in get_flashed_messages() %}
-  <p>
-    <b>{{ message }}</b>
-  </p>
-  {% endfor %}
-
-  <form action="/create" method="post">
-    <p>
-      Username: <br />
-      <input type="text" name="username" maxlength="15" required/>
-    </p>
-    <p>
-      Password: <br />
-      <input type="password" name="password1" required/>
-    </p>
-    <p>
-      Password again: <br />
-      <input type="password" name="password2" required/>
-    </p>
-    <input type="submit" value="Create account" />
-  </form>
+    <form action="/create" method="post">
+      <p>
+        Username: <br />
+        <input type="text" name="username" maxlength="15" required/>
+      </p>
+      <p>
+        Password: <br />
+        <input type="password" name="password1" required/>
+      </p>
+      <p>
+        Password again: <br />
+        <input type="password" name="password2" required/>
+      </p>
+      <input type="submit" value="Create account" />
+    </form>
+  </div>
 </body>
 
 </html>
