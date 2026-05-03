@@ -91,7 +91,7 @@ users.py:32:4: R1705: Unnecessary "else" after "return", remove the "else" and d
 ```
 
 Ensimmäiseen ilmoitukseen liittyvä koodi:
-```
+```python
 if request.method == "POST":
     check_csrf()
     if "remove" in request.form:
@@ -102,7 +102,7 @@ if request.method == "POST":
 ```
 
 Pylint haluaa koodin kirjoitettuna seuraavasti:
-```
+```python
 if request.method == "POST":
     check_csrf()
     if "remove" in request.form:
@@ -120,7 +120,7 @@ app.py:224:0: R1710: Either all return statements in a function should return an
 ```
 
 Ensimmäiseen ilmoitukseen liittyvä koodi:
-```
+```python
 @app.route("/remove_opinion/<int:item_id>", methods=["GET", "POST"])
 def remove_item(item_id):
     check_login()
