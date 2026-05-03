@@ -13,7 +13,7 @@ print("USING ITEMS FILE:", items.__file__)
 
 
 app = Flask(__name__)
-app.secret_key = config.secret_key
+app.secret_key = config.SECRET_KEY
 
 def check_login():
     if "user_id" not in session:

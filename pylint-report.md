@@ -32,9 +32,7 @@ app.py:329:0: R1710: Either all return statements in a function should return an
 app.py:348:0: C0116: Missing function or method docstring (missing-function-docstring)
 ************* Module config
 config.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-config.py:1:0: C0103: Constant name "secret_key" doesn't conform to UPPER_CASE naming style (invalid-name)
 ************* Module db
-db.py:24:0: C0304: Final newline missing (missing-final-newline)
 db.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 db.py:4:0: C0116: Missing function or method docstring (missing-function-docstring)
 db.py:10:0: C0116: Missing function or method docstring (missing-function-docstring)
@@ -70,7 +68,7 @@ users.py:22:0: C0116: Missing function or method docstring (missing-function-doc
 users.py:32:4: R1705: Unnecessary "else" after "return", remove the "else" and de-indent the code inside it (no-else-return)
 
 ------------------------------------------------------------------
-Your code has been rated at 8.29/10 (previous run: 8.26/10, +0.03)
+Your code has been rated at 8.35/10 (previous run: 8.29/10, +0.06)
 ```
 
 Käydään läpi tarkemmin raportin sisältö ja miksi kaikki ei ole korjattu.
@@ -145,8 +143,20 @@ def remove_item(item_id):
 
 Ilmoitus haluaa varoittaa, että koodi ei palauta arvoa, kun `request.method` ei ole `GET` tai `POST`. Tämä ei ole kuitenkaan mahdollista, sillä funktion dekoraattorissa vaaditaan, että metodin tulee olla `GET` tai `POST`. Tällöin ei ole riskiä, että funktio ei palauta mitään.
 
-## Vakion nimi:
+## Vaarallinen oletusarvo:
 ```
-config.py:1:0: C0103: Constant name "secret_key" doesn't conform to UPPER_CASE naming style (invalid-name)
+db.py:10:0: W0102: Dangerous default value [] as argument (dangerous-default-value)
+db.py:20:0: W0102: Dangerous default value [] as argument (dangerous-default-value)
 ```
 
+Ensimmäiseen ilmoitukseen liittyvä koodi:
+```python
+def execute(sql, params=[]):
+    con = get_connection()
+    result = con.execute(sql, params)
+    con.commit()
+    g.last_insert_id = result.lastrowid
+    con.close()
+```
+
+Tässä parametrin oletusarvo `[]` on tyhjä lista. Varoitus tulee siksi, että jaettu oletuslista voisi aiheuttaa ongelmia, jos sitä muokattaisiin. Tässä funktiossa listaa ei kuitenkaan koskaan muuteta, jolloin haittaa ei synny.
