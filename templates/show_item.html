@@ -31,16 +31,15 @@
     {% if session.user_id == item.user_id %}
     <p>
       <a href="/edit_opinion/{{ item.id }}">Edit</a>
-      <a href="/remove_opinion/{{ item.id }}">Delete</a>  
       <a href="/images/{{ item.id }}">Images</a>  
-
+      <a href="/remove_opinion/{{ item.id }}">Delete</a>  
     </p>
     {% endif %}
     <p>
       <a href="/"><button>Back</button></a>
     </p>
 
-    <h2>Community Poll</h2>
+    <h2>Community Poll:</h2>
     <div class="poll-results">
         <span>Yes: {{ reaction_counts.yes }}</span>
         <span>Meh: {{ reaction_counts.meh }}</span>
@@ -75,7 +74,7 @@
           {% else %}
           <form action="/vote" method="post">
               <input type="hidden" name="item_id" value="{{ item.id }}">
-
+          <p>What do you think?</p>
           <select name="reaction" required>
               <option value="yes">Yes</option>
               <option value="meh">Meh</option>
