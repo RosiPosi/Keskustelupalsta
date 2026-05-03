@@ -72,3 +72,14 @@ users.py:32:4: R1705: Unnecessary "else" after "return", remove the "else" and d
 ------------------------------------------------------------------
 Your code has been rated at 8.29/10 (previous run: 8.26/10, +0.03)
 ```
+
+Käydään läpi tarkemmin raportin sisältö ja miksi kaikki ei ole korjattu.
+
+## Docstring-ilmoitukset:
+```
+app.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app.py:18:0: C0116: Missing function or method docstring (missing-function-docstring)
+```
+
+Raportissa mainitaan paljon docstring-kommentteiden puuttuminen. Sovelluksen teossa ei ollut tarvetta dokumentoida koodi docstring-kommenteilla, jolloin niiden yli voi hypätä tietoisesti.
+
