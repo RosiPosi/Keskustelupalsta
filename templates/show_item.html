@@ -7,20 +7,28 @@
 </head>
 
 <body>
-  <div class="post-page">
+
+  <div class="ver-header">
+    <h1>{{ item.title }}</h1>
     <p>
-      Opinion by: <a href="/user/{{ item.user_id }}">{{ item.username }}</a>
-    </p>
-    
-    <p>
-      
+      Opinion by: <a href="/user/{{ item.user_id }}" class="no-link">{{ item.username }}</a>
       {% for class in classes %}
       <p>Category: <span class="cat">{{ class.value }}</span></p>
       {% endfor %}
-
     </p>
 
-    <h1>{{ item.title }}</h1>
+    {% if session.user_id == item.user_id %}
+      <a href="/edit_opinion/{{ item.id }}" class="edit-btn">Edit text</a>
+      <a href="/images/{{ item.id }}" class="edit-btn">Edit images</a>
+      <a href="/remove_opinion/{{ item.id }}" class="edit-btn">Delete</a>
+    {% endif %}
+    <p>
+      <a href="/"><button>Back</button></a>
+    </p>
+  
+    </div>
+
+    <div class="post-page">
     <p>{% for image in images %}
     <img src="/image/{{ image.id }}"/>
     {% endfor %}
@@ -28,43 +36,13 @@
 
     <div class="border">{{ item.description | show_lines }}</div>
 
-    {% if session.user_id == item.user_id %}
-    <p>
-      <a href="/edit_opinion/{{ item.id }}">Edit</a>
-      <a href="/images/{{ item.id }}">Images</a>  
-      <a href="/remove_opinion/{{ item.id }}">Delete</a>  
-    </p>
-    {% endif %}
-    <p>
-      <a href="/"><button>Back</button></a>
-    </p>
-
     <h2>Community Poll:</h2>
     <div class="poll-results">
         <span>Yes: {{ reaction_counts.yes }}</span>
         <span>Meh: {{ reaction_counts.meh }}</span>
         <span>No: {{ reaction_counts.no }}</span>
     </div>
-
-    <h2>Discussion:</h2>
-    <ul>
-      {% for comment in comments %}
-      <p>
-      <a href="/user/{{ comment.user_id }}">
-          {{ comment.username }}
-      </a>
-
-      {% if comment.reaction %}
-          [{{ comment.reaction|upper }}]
-      {% endif %}
-
-      : {{ comment.comment | show_lines }}
-            </p>
-      {% else %}
-
-      <p>No messages yet!</p>
-      {% endfor %}
-    </ul>
+    
 
       <p>
         <h3>Vote:</h3> 
@@ -88,6 +66,29 @@
         <p><a href="/login">Log in</a> to give your vote!</p>
         {% endif %}
       </p>
+    
+    
+      <h2>Discussion:</h2>
+      <ul>
+        {% for comment in comments %}
+        <p>
+        <a href="/user/{{ comment.user_id }}" class="no-link-dark">
+            {{ comment.username }}
+        </a>
+
+        {% if comment.reaction %}
+            [{{ comment.reaction|upper }}]
+        {% endif %}
+
+        : {{ comment.comment | show_lines }}
+              </p>
+        {% else %}
+
+        <p>No messages yet!</p>
+        {% endfor %}
+      </ul>
+
+
 
       <form action="/comment" method="post">
         <input type="hidden" name="item_id" value="{{ item.id }}">
@@ -105,7 +106,7 @@
         {% endif %}
 
       </form>
-  </div>
+    </div>
 </body>
 
 </html>
