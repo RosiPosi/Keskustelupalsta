@@ -1,17 +1,48 @@
-.left, .right {
+.header {
+  padding: 10px;
+  text-align: left;
+  background: #b4274a;
+  color: white;
+  font-size: 17px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.small_size {
+  font-size: 12px;
+}
+
+.logout_btn {
+  margin-left: 15px;
+}
+
+.left {
+  float: left;
+  width: 30%;
+}
+
+.right {
   float: left;
   width: 20%;
 }
 
 .main {
   float: left;
-  width: 60%;
+  width: 50%;
 }
 
 @media screen and (max-width: 800px) {
   .left, .main, .right {
     width: 100%;
   }
+}
+
+.no_link {
+  text-decoration: none;
+  color: rgb(203, 253, 255);
+  font-weight: bold;
 }
 
 .post-page {
@@ -75,5 +106,5 @@ img {
 }
 
 .button {
-  background-color: rgb(128, 206, 135);
+  background-color: #db3b63;
 }
