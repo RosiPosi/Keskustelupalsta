@@ -13,7 +13,7 @@
 
     <!--SEARCH BAR-->
     <form action="/search" method="GET">
-      <p>Search: <input type="text" name="query" placeholder="I'd like to discuss..." value="{{ query }}">
+      <p><input type="text" name="query" placeholder="I'd like to discuss..." value="{{ query }}">
       <input type="submit" value="Search"> </p>
     </form>
 
@@ -72,7 +72,10 @@
     </ul>
 
   </div>
-  <p><a href="/new_opinion"><button class="new_topic">✚</button></p></a>
+
+    {% if session.username %}
+    <p><a href="/new_opinion"><button class="new_topic">✚</button></p></a>
+    {% endif %}
 
 </body>
 </html>
