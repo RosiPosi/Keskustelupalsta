@@ -30,7 +30,7 @@
 
     <div class="post-page">
     <p>{% for image in images %}
-    <img src="/image/{{ image.id }}"/>
+    <img src="/image/{{ image.id }}" alt="Image for topic"/>
     {% endfor %}
     </p>
 
@@ -52,8 +52,8 @@
           {% else %}
           <form action="/vote" method="post">
               <input type="hidden" name="item_id" value="{{ item.id }}">
-          <p>What do you think?</p>
-          <select name="reaction" required>
+          <label for="reaction">What do you think?</label>
+          <select id="reaction" name="reaction" required>
               <option value="yes">Yes</option>
               <option value="meh">Meh</option>
               <option value="no">No</option>
@@ -93,9 +93,9 @@
       <form action="/comment" method="post">
         <input type="hidden" name="item_id" value="{{ item.id }}">
         <p>
-            Discuss: <br />
+            <label for="comment">Discuss:</label> </br>
         {% if session.user_id %}
-            <textarea name="comment" rows="6" cols="60" maxlength="450" required></textarea>
+            <textarea id="comment" name="comment" rows="6" cols="60" maxlength="450" required></textarea>
         </p>
 
           <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
